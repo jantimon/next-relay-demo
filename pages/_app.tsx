@@ -4,7 +4,5 @@ import { ReactRelayContainer } from "../data/ReactRelayContainer";
 import "../styles/globals.css";
 
 export default function MyApp({ Component, pageProps }: AppProps) {
-  return (
-      <ReactRelayContainer Component={Component} props={pageProps} />
-  );
+  return <ReactRelayContainer Component={Component} props={pageProps} />;
 }

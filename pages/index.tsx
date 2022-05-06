@@ -23,7 +23,6 @@ const Home: NextPage = () => {
           <a>Home of Pasta</a>
         </Link>
       </main>
-
     </div>
   );
 };

@@ -3,28 +3,34 @@ import { PreloadedQuery } from "react-relay";
 import { graphql, usePreloadedQuery } from "react-relay/hooks";
 import { getPreloadedQuery } from "../../data/network";
 import { Flag } from "../../src/components/Flag";
-import preloadQuery, { CountryCode_Query } from "../../__generated__/CountryCode_Query.graphql";
+import preloadQuery, {
+  CountryCode_Query,
+} from "../../__generated__/CountryCode_Query.graphql";
 
 interface CountryProps {
   queryRefs: {
     query: PreloadedQuery<CountryCode_Query>;
   };
 }
-
-const query = graphql`
-  query CountryCode_Query($countryCode: ID!) {
-    country(code: $countryCode) @required(action: NONE) {
-      name
-      ...Flag_icon
-    }
-  }
-`;
-
 const Country = (props: CountryProps) => {
-  const data = usePreloadedQuery(query, props.queryRefs.query);
+  const data = usePreloadedQuery(
+    graphql`
+      query CountryCode_Query($countryCode: ID!) {
+        country(code: $countryCode) @required(action: NONE) {
+          name
+          ...Flag_icon
+        }
+      }
+    `,
+    props.queryRefs.query
+  );
 
   if (!data) {
-    return <main><h1>Unknown country</h1></main>
+    return (
+      <main>
+        <h1>Unknown country</h1>
+      </main>
+    );
   }
 
   return (
@@ -35,8 +41,6 @@ const Country = (props: CountryProps) => {
   );
 };
 
-export default Country;
-
 Country.getInitialProps = async (ctx: NextPageContext) => {
   return {
     preloadedQueries: {
@@ -46,3 +50,5 @@ Country.getInitialProps = async (ctx: NextPageContext) => {
     },
   };
 };
+
+export default Country;

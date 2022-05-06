@@ -29,14 +29,16 @@ const Pasta = (props: ProductProps) => {
   );
 };
 
-export default Pasta;
-
 export async function getStaticProps() {
-  return { props: {
-    preloadedQueries: {
-      query: await getPreloadedQuery(PastaQuery, {
-        countryCode: 'IT'
-      }),
+  return {
+    props: {
+      preloadedQueries: {
+        query: await getPreloadedQuery(PastaQuery, {
+          countryCode: "IT",
+        }),
+      },
     },
-  }};
-};
+  };
+}
+
+export default Pasta;
