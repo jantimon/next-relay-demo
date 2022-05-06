@@ -1,0 +1,2 @@
+schema: 'data/schema.graphql'
+documents: 'src/**/*.tsx'
