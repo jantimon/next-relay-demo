@@ -4,7 +4,7 @@ import { getPreloadedQuery } from "../data/network";
 import { Flag } from "../src/components/Flag";
 import preloadQuery, { Pasta_Query } from "../__generated__/Pasta_Query.graphql";
 
-interface ProductProps {
+interface PastaProps {
   queryRefs: {
     query: PreloadedQuery<Pasta_Query>;
   };
