@@ -14,7 +14,7 @@ interface ContinentProps {
   };
 }
 
-const Country = (props: ContinentProps) => {
+const Continent = (props: ContinentProps) => {
   const data = usePreloadedQuery(
     graphql`
       query ContinentCode_Query($continentCode: ID!) {
@@ -52,7 +52,7 @@ const Country = (props: ContinentProps) => {
   );
 };
 
-Country.getInitialProps = async (ctx: NextPageContext) => {
+Continent.getInitialProps = async (ctx: NextPageContext) => {
   return {
     preloadedQueries: {
       query: await getPreloadedQuery(preloadQuery, {
@@ -62,4 +62,4 @@ Country.getInitialProps = async (ctx: NextPageContext) => {
   };
 };
 
-export default Country;
+export default Continent;
