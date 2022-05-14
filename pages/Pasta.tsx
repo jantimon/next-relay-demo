@@ -10,7 +10,7 @@ interface PastaProps {
   };
 }
 
-const Pasta = (props: ProductProps) => {
+const Pasta = (props: PastaProps) => {
   const data = usePreloadedQuery(graphql`
     query Pasta_Query($countryCode: ID!) {
       country(code: $countryCode) @required(action: THROW) {
