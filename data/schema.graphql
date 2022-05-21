@@ -1,86 +1,1941 @@
-directive @key(fields: String!) on OBJECT | INTERFACE
-
-directive @extends on OBJECT | INTERFACE
-
-directive @external on OBJECT | FIELD_DEFINITION
-
-directive @requires(fields: String!) on FIELD_DEFINITION
-
-directive @provides(fields: String!) on FIELD_DEFINITION
-
-type Country {
-  code: ID!
-  name: String!
-  native: String!
-  phone: String!
-  continent: Continent!
-  capital: String
-  currency: String
-  languages: [Language!]!
-  emoji: String!
-  emojiU: String!
-  states: [State!]!
+schema {
+  query: query_root
+  mutation: mutation_root
+  subscription: subscription_root
 }
 
-type Continent {
-  code: ID!
-  name: String!
-  countries: [Country!]!
+"""whether this query should be cached (Hasura Cloud only)"""
+directive @cached(
+  """measured in seconds"""
+  ttl: Int! = 60
+
+  """refresh the cache entry"""
+  refresh: Boolean! = false
+) on QUERY
+
+"""
+Boolean expression to compare columns of type "Int". All fields are combined with logical 'AND'.
+"""
+input Int_comparison_exp {
+  _eq: Int
+  _gt: Int
+  _gte: Int
+  _in: [Int!]
+  _is_null: Boolean
+  _lt: Int
+  _lte: Int
+  _neq: Int
+  _nin: [Int!]
 }
 
-type Language {
-  code: ID!
+"""mutation root"""
+type mutation_root {
+  """
+  delete data from the table: "ProductReviewComments"
+  """
+  delete_ProductReviewComments(
+    """filter the rows which have to be deleted"""
+    where: ProductReviewComments_bool_exp!
+  ): ProductReviewComments_mutation_response
+
+  """
+  delete single row from the table: "ProductReviewComments"
+  """
+  delete_ProductReviewComments_by_pk(id: Int!): ProductReviewComments
+
+  """
+  delete data from the table: "ProductReviews"
+  """
+  delete_ProductReviews(
+    """filter the rows which have to be deleted"""
+    where: ProductReviews_bool_exp!
+  ): ProductReviews_mutation_response
+
+  """
+  delete single row from the table: "ProductReviews"
+  """
+  delete_ProductReviews_by_pk(id: Int!): ProductReviews
+
+  """
+  delete data from the table: "Products"
+  """
+  delete_Products(
+    """filter the rows which have to be deleted"""
+    where: Products_bool_exp!
+  ): Products_mutation_response
+
+  """
+  delete single row from the table: "Products"
+  """
+  delete_Products_by_pk(id: Int!): Products
+
+  """
+  delete data from the table: "Users"
+  """
+  delete_Users(
+    """filter the rows which have to be deleted"""
+    where: Users_bool_exp!
+  ): Users_mutation_response
+
+  """
+  delete single row from the table: "Users"
+  """
+  delete_Users_by_pk(id: Int!): Users
+
+  """
+  insert data into the table: "ProductReviewComments"
+  """
+  insert_ProductReviewComments(
+    """the rows to be inserted"""
+    objects: [ProductReviewComments_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: ProductReviewComments_on_conflict
+  ): ProductReviewComments_mutation_response
+
+  """
+  insert a single row into the table: "ProductReviewComments"
+  """
+  insert_ProductReviewComments_one(
+    """the row to be inserted"""
+    object: ProductReviewComments_insert_input!
+
+    """upsert condition"""
+    on_conflict: ProductReviewComments_on_conflict
+  ): ProductReviewComments
+
+  """
+  insert data into the table: "ProductReviews"
+  """
+  insert_ProductReviews(
+    """the rows to be inserted"""
+    objects: [ProductReviews_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: ProductReviews_on_conflict
+  ): ProductReviews_mutation_response
+
+  """
+  insert a single row into the table: "ProductReviews"
+  """
+  insert_ProductReviews_one(
+    """the row to be inserted"""
+    object: ProductReviews_insert_input!
+
+    """upsert condition"""
+    on_conflict: ProductReviews_on_conflict
+  ): ProductReviews
+
+  """
+  insert data into the table: "Products"
+  """
+  insert_Products(
+    """the rows to be inserted"""
+    objects: [Products_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: Products_on_conflict
+  ): Products_mutation_response
+
+  """
+  insert a single row into the table: "Products"
+  """
+  insert_Products_one(
+    """the row to be inserted"""
+    object: Products_insert_input!
+
+    """upsert condition"""
+    on_conflict: Products_on_conflict
+  ): Products
+
+  """
+  insert data into the table: "Users"
+  """
+  insert_Users(
+    """the rows to be inserted"""
+    objects: [Users_insert_input!]!
+
+    """upsert condition"""
+    on_conflict: Users_on_conflict
+  ): Users_mutation_response
+
+  """
+  insert a single row into the table: "Users"
+  """
+  insert_Users_one(
+    """the row to be inserted"""
+    object: Users_insert_input!
+
+    """upsert condition"""
+    on_conflict: Users_on_conflict
+  ): Users
+
+  """
+  update data of the table: "ProductReviewComments"
+  """
+  update_ProductReviewComments(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: ProductReviewComments_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: ProductReviewComments_set_input
+
+    """filter the rows which have to be updated"""
+    where: ProductReviewComments_bool_exp!
+  ): ProductReviewComments_mutation_response
+
+  """
+  update single row of the table: "ProductReviewComments"
+  """
+  update_ProductReviewComments_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: ProductReviewComments_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: ProductReviewComments_set_input
+    pk_columns: ProductReviewComments_pk_columns_input!
+  ): ProductReviewComments
+
+  """
+  update data of the table: "ProductReviews"
+  """
+  update_ProductReviews(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: ProductReviews_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: ProductReviews_set_input
+
+    """filter the rows which have to be updated"""
+    where: ProductReviews_bool_exp!
+  ): ProductReviews_mutation_response
+
+  """
+  update single row of the table: "ProductReviews"
+  """
+  update_ProductReviews_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: ProductReviews_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: ProductReviews_set_input
+    pk_columns: ProductReviews_pk_columns_input!
+  ): ProductReviews
+
+  """
+  update data of the table: "Products"
+  """
+  update_Products(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: Products_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: Products_set_input
+
+    """filter the rows which have to be updated"""
+    where: Products_bool_exp!
+  ): Products_mutation_response
+
+  """
+  update single row of the table: "Products"
+  """
+  update_Products_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: Products_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: Products_set_input
+    pk_columns: Products_pk_columns_input!
+  ): Products
+
+  """
+  update data of the table: "Users"
+  """
+  update_Users(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: Users_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: Users_set_input
+
+    """filter the rows which have to be updated"""
+    where: Users_bool_exp!
+  ): Users_mutation_response
+
+  """
+  update single row of the table: "Users"
+  """
+  update_Users_by_pk(
+    """increments the numeric columns with given value of the filtered values"""
+    _inc: Users_inc_input
+
+    """sets the columns of the filtered rows to the given values"""
+    _set: Users_set_input
+    pk_columns: Users_pk_columns_input!
+  ): Users
+}
+
+"""An object with globally unique ID"""
+interface Node {
+  """A globally unique identifier"""
+  id: ID!
+}
+
+scalar numeric
+
+"""
+Boolean expression to compare columns of type "numeric". All fields are combined with logical 'AND'.
+"""
+input numeric_comparison_exp {
+  _eq: numeric
+  _gt: numeric
+  _gte: numeric
+  _in: [numeric!]
+  _is_null: Boolean
+  _lt: numeric
+  _lte: numeric
+  _neq: numeric
+  _nin: [numeric!]
+}
+
+"""column ordering options"""
+enum order_by {
+  """in ascending order, nulls last"""
+  asc
+
+  """in ascending order, nulls first"""
+  asc_nulls_first
+
+  """in ascending order, nulls last"""
+  asc_nulls_last
+
+  """in descending order, nulls first"""
+  desc
+
+  """in descending order, nulls first"""
+  desc_nulls_first
+
+  """in descending order, nulls last"""
+  desc_nulls_last
+}
+
+type PageInfo {
+  endCursor: String!
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String!
+}
+
+"""
+columns and relationships of "ProductReviewComments"
+"""
+type ProductReviewComments implements Node {
+  """An object relationship"""
+  ProductReview: ProductReviews!
+
+  """An object relationship"""
+  User: Users!
+  comment: String!
+  created_at: timestamptz!
+  id: ID!
+  reviewId: Int!
+  updated_at: timestamptz!
+  userId: Int!
+}
+
+"""
+aggregated selection of "ProductReviewComments"
+"""
+type ProductReviewComments_aggregate {
+  aggregate: ProductReviewComments_aggregate_fields
+  nodes: [ProductReviewComments!]!
+}
+
+"""
+aggregate fields of "ProductReviewComments"
+"""
+type ProductReviewComments_aggregate_fields {
+  avg: ProductReviewComments_avg_fields
+  count(columns: [ProductReviewComments_select_column!], distinct: Boolean): Int!
+  max: ProductReviewComments_max_fields
+  min: ProductReviewComments_min_fields
+  stddev: ProductReviewComments_stddev_fields
+  stddev_pop: ProductReviewComments_stddev_pop_fields
+  stddev_samp: ProductReviewComments_stddev_samp_fields
+  sum: ProductReviewComments_sum_fields
+  var_pop: ProductReviewComments_var_pop_fields
+  var_samp: ProductReviewComments_var_samp_fields
+  variance: ProductReviewComments_variance_fields
+}
+
+"""
+order by aggregate values of table "ProductReviewComments"
+"""
+input ProductReviewComments_aggregate_order_by {
+  avg: ProductReviewComments_avg_order_by
+  count: order_by
+  max: ProductReviewComments_max_order_by
+  min: ProductReviewComments_min_order_by
+  stddev: ProductReviewComments_stddev_order_by
+  stddev_pop: ProductReviewComments_stddev_pop_order_by
+  stddev_samp: ProductReviewComments_stddev_samp_order_by
+  sum: ProductReviewComments_sum_order_by
+  var_pop: ProductReviewComments_var_pop_order_by
+  var_samp: ProductReviewComments_var_samp_order_by
+  variance: ProductReviewComments_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "ProductReviewComments"
+"""
+input ProductReviewComments_arr_rel_insert_input {
+  data: [ProductReviewComments_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: ProductReviewComments_on_conflict
+}
+
+"""aggregate avg on columns"""
+type ProductReviewComments_avg_fields {
+  id: Float
+  reviewId: Float
+  userId: Float
+}
+
+"""
+order by avg() on columns of table "ProductReviewComments"
+"""
+input ProductReviewComments_avg_order_by {
+  id: order_by
+  reviewId: order_by
+  userId: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "ProductReviewComments". All fields are combined with a logical 'AND'.
+"""
+input ProductReviewComments_bool_exp {
+  ProductReview: ProductReviews_bool_exp
+  User: Users_bool_exp
+  _and: [ProductReviewComments_bool_exp!]
+  _not: ProductReviewComments_bool_exp
+  _or: [ProductReviewComments_bool_exp!]
+  comment: String_comparison_exp
+  created_at: timestamptz_comparison_exp
+  id: Int_comparison_exp
+  reviewId: Int_comparison_exp
+  updated_at: timestamptz_comparison_exp
+  userId: Int_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "ProductReviewComments"
+"""
+enum ProductReviewComments_constraint {
+  """unique or primary key constraint"""
+  ProductReviewComments_id_key
+
+  """unique or primary key constraint"""
+  ProductReviewComments_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "ProductReviewComments"
+"""
+input ProductReviewComments_inc_input {
+  id: Int
+  reviewId: Int
+  userId: Int
+}
+
+"""
+input type for inserting data into table "ProductReviewComments"
+"""
+input ProductReviewComments_insert_input {
+  ProductReview: ProductReviews_obj_rel_insert_input
+  User: Users_obj_rel_insert_input
+  comment: String
+  created_at: timestamptz
+  id: Int
+  reviewId: Int
+  updated_at: timestamptz
+  userId: Int
+}
+
+"""aggregate max on columns"""
+type ProductReviewComments_max_fields {
+  comment: String
+  created_at: timestamptz
+  id: Int
+  reviewId: Int
+  updated_at: timestamptz
+  userId: Int
+}
+
+"""
+order by max() on columns of table "ProductReviewComments"
+"""
+input ProductReviewComments_max_order_by {
+  comment: order_by
+  created_at: order_by
+  id: order_by
+  reviewId: order_by
+  updated_at: order_by
+  userId: order_by
+}
+
+"""aggregate min on columns"""
+type ProductReviewComments_min_fields {
+  comment: String
+  created_at: timestamptz
+  id: Int
+  reviewId: Int
+  updated_at: timestamptz
+  userId: Int
+}
+
+"""
+order by min() on columns of table "ProductReviewComments"
+"""
+input ProductReviewComments_min_order_by {
+  comment: order_by
+  created_at: order_by
+  id: order_by
+  reviewId: order_by
+  updated_at: order_by
+  userId: order_by
+}
+
+"""
+response of any mutation on the table "ProductReviewComments"
+"""
+type ProductReviewComments_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [ProductReviewComments!]!
+}
+
+"""
+on_conflict condition type for table "ProductReviewComments"
+"""
+input ProductReviewComments_on_conflict {
+  constraint: ProductReviewComments_constraint!
+  update_columns: [ProductReviewComments_update_column!]! = []
+  where: ProductReviewComments_bool_exp
+}
+
+"""Ordering options when selecting data from "ProductReviewComments"."""
+input ProductReviewComments_order_by {
+  ProductReview: ProductReviews_order_by
+  User: Users_order_by
+  comment: order_by
+  created_at: order_by
+  id: order_by
+  reviewId: order_by
+  updated_at: order_by
+  userId: order_by
+}
+
+"""primary key columns input for table: ProductReviewComments"""
+input ProductReviewComments_pk_columns_input {
+  id: Int!
+}
+
+"""
+select columns of table "ProductReviewComments"
+"""
+enum ProductReviewComments_select_column {
+  """column name"""
+  comment
+
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  reviewId
+
+  """column name"""
+  updated_at
+
+  """column name"""
+  userId
+}
+
+"""
+input type for updating data in table "ProductReviewComments"
+"""
+input ProductReviewComments_set_input {
+  comment: String
+  created_at: timestamptz
+  id: Int
+  reviewId: Int
+  updated_at: timestamptz
+  userId: Int
+}
+
+"""aggregate stddev on columns"""
+type ProductReviewComments_stddev_fields {
+  id: Float
+  reviewId: Float
+  userId: Float
+}
+
+"""
+order by stddev() on columns of table "ProductReviewComments"
+"""
+input ProductReviewComments_stddev_order_by {
+  id: order_by
+  reviewId: order_by
+  userId: order_by
+}
+
+"""aggregate stddev_pop on columns"""
+type ProductReviewComments_stddev_pop_fields {
+  id: Float
+  reviewId: Float
+  userId: Float
+}
+
+"""
+order by stddev_pop() on columns of table "ProductReviewComments"
+"""
+input ProductReviewComments_stddev_pop_order_by {
+  id: order_by
+  reviewId: order_by
+  userId: order_by
+}
+
+"""aggregate stddev_samp on columns"""
+type ProductReviewComments_stddev_samp_fields {
+  id: Float
+  reviewId: Float
+  userId: Float
+}
+
+"""
+order by stddev_samp() on columns of table "ProductReviewComments"
+"""
+input ProductReviewComments_stddev_samp_order_by {
+  id: order_by
+  reviewId: order_by
+  userId: order_by
+}
+
+"""aggregate sum on columns"""
+type ProductReviewComments_sum_fields {
+  id: Int
+  reviewId: Int
+  userId: Int
+}
+
+"""
+order by sum() on columns of table "ProductReviewComments"
+"""
+input ProductReviewComments_sum_order_by {
+  id: order_by
+  reviewId: order_by
+  userId: order_by
+}
+
+"""
+update columns of table "ProductReviewComments"
+"""
+enum ProductReviewComments_update_column {
+  """column name"""
+  comment
+
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  reviewId
+
+  """column name"""
+  updated_at
+
+  """column name"""
+  userId
+}
+
+"""aggregate var_pop on columns"""
+type ProductReviewComments_var_pop_fields {
+  id: Float
+  reviewId: Float
+  userId: Float
+}
+
+"""
+order by var_pop() on columns of table "ProductReviewComments"
+"""
+input ProductReviewComments_var_pop_order_by {
+  id: order_by
+  reviewId: order_by
+  userId: order_by
+}
+
+"""aggregate var_samp on columns"""
+type ProductReviewComments_var_samp_fields {
+  id: Float
+  reviewId: Float
+  userId: Float
+}
+
+"""
+order by var_samp() on columns of table "ProductReviewComments"
+"""
+input ProductReviewComments_var_samp_order_by {
+  id: order_by
+  reviewId: order_by
+  userId: order_by
+}
+
+"""aggregate variance on columns"""
+type ProductReviewComments_variance_fields {
+  id: Float
+  reviewId: Float
+  userId: Float
+}
+
+"""
+order by variance() on columns of table "ProductReviewComments"
+"""
+input ProductReviewComments_variance_order_by {
+  id: order_by
+  reviewId: order_by
+  userId: order_by
+}
+
+"""
+A Relay connection object on "ProductReviewComments"
+"""
+type ProductReviewCommentsConnection {
+  edges: [ProductReviewCommentsEdge!]!
+  pageInfo: PageInfo!
+}
+
+type ProductReviewCommentsEdge {
+  cursor: String!
+  node: ProductReviewComments!
+}
+
+"""
+columns and relationships of "ProductReviews"
+"""
+type ProductReviews implements Node {
+  """An object relationship"""
+  Product: Products!
+
+  """An array relationship"""
+  ProductReviewComments(
+    """distinct select on columns"""
+    distinct_on: [ProductReviewComments_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [ProductReviewComments_order_by!]
+
+    """filter the rows returned"""
+    where: ProductReviewComments_bool_exp
+  ): [ProductReviewComments!]!
+
+  """An aggregate relationship"""
+  ProductReviewComments_aggregate(
+    """distinct select on columns"""
+    distinct_on: [ProductReviewComments_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [ProductReviewComments_order_by!]
+
+    """filter the rows returned"""
+    where: ProductReviewComments_bool_exp
+  ): ProductReviewComments_aggregate!
+
+  """An array relationship connection"""
+  ProductReviewComments_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [ProductReviewComments_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [ProductReviewComments_order_by!]
+
+    """filter the rows returned"""
+    where: ProductReviewComments_bool_exp
+  ): ProductReviewCommentsConnection!
+
+  """An object relationship"""
+  User: Users!
+  created_at: timestamptz!
+  id: ID!
+  productId: Int!
+  score: Int!
+  text: String
+  title: String!
+  updated_at: timestamptz!
+  userId: Int!
+}
+
+"""
+aggregated selection of "ProductReviews"
+"""
+type ProductReviews_aggregate {
+  aggregate: ProductReviews_aggregate_fields
+  nodes: [ProductReviews!]!
+}
+
+"""
+aggregate fields of "ProductReviews"
+"""
+type ProductReviews_aggregate_fields {
+  avg: ProductReviews_avg_fields
+  count(columns: [ProductReviews_select_column!], distinct: Boolean): Int!
+  max: ProductReviews_max_fields
+  min: ProductReviews_min_fields
+  stddev: ProductReviews_stddev_fields
+  stddev_pop: ProductReviews_stddev_pop_fields
+  stddev_samp: ProductReviews_stddev_samp_fields
+  sum: ProductReviews_sum_fields
+  var_pop: ProductReviews_var_pop_fields
+  var_samp: ProductReviews_var_samp_fields
+  variance: ProductReviews_variance_fields
+}
+
+"""
+order by aggregate values of table "ProductReviews"
+"""
+input ProductReviews_aggregate_order_by {
+  avg: ProductReviews_avg_order_by
+  count: order_by
+  max: ProductReviews_max_order_by
+  min: ProductReviews_min_order_by
+  stddev: ProductReviews_stddev_order_by
+  stddev_pop: ProductReviews_stddev_pop_order_by
+  stddev_samp: ProductReviews_stddev_samp_order_by
+  sum: ProductReviews_sum_order_by
+  var_pop: ProductReviews_var_pop_order_by
+  var_samp: ProductReviews_var_samp_order_by
+  variance: ProductReviews_variance_order_by
+}
+
+"""
+input type for inserting array relation for remote table "ProductReviews"
+"""
+input ProductReviews_arr_rel_insert_input {
+  data: [ProductReviews_insert_input!]!
+
+  """upsert condition"""
+  on_conflict: ProductReviews_on_conflict
+}
+
+"""aggregate avg on columns"""
+type ProductReviews_avg_fields {
+  id: Float
+  productId: Float
+  score: Float
+  userId: Float
+}
+
+"""
+order by avg() on columns of table "ProductReviews"
+"""
+input ProductReviews_avg_order_by {
+  id: order_by
+  productId: order_by
+  score: order_by
+  userId: order_by
+}
+
+"""
+Boolean expression to filter rows from the table "ProductReviews". All fields are combined with a logical 'AND'.
+"""
+input ProductReviews_bool_exp {
+  Product: Products_bool_exp
+  ProductReviewComments: ProductReviewComments_bool_exp
+  User: Users_bool_exp
+  _and: [ProductReviews_bool_exp!]
+  _not: ProductReviews_bool_exp
+  _or: [ProductReviews_bool_exp!]
+  created_at: timestamptz_comparison_exp
+  id: Int_comparison_exp
+  productId: Int_comparison_exp
+  score: Int_comparison_exp
+  text: String_comparison_exp
+  title: String_comparison_exp
+  updated_at: timestamptz_comparison_exp
+  userId: Int_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "ProductReviews"
+"""
+enum ProductReviews_constraint {
+  """unique or primary key constraint"""
+  ProductReviews_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "ProductReviews"
+"""
+input ProductReviews_inc_input {
+  id: Int
+  productId: Int
+  score: Int
+  userId: Int
+}
+
+"""
+input type for inserting data into table "ProductReviews"
+"""
+input ProductReviews_insert_input {
+  Product: Products_obj_rel_insert_input
+  ProductReviewComments: ProductReviewComments_arr_rel_insert_input
+  User: Users_obj_rel_insert_input
+  created_at: timestamptz
+  id: Int
+  productId: Int
+  score: Int
+  text: String
+  title: String
+  updated_at: timestamptz
+  userId: Int
+}
+
+"""aggregate max on columns"""
+type ProductReviews_max_fields {
+  created_at: timestamptz
+  id: Int
+  productId: Int
+  score: Int
+  text: String
+  title: String
+  updated_at: timestamptz
+  userId: Int
+}
+
+"""
+order by max() on columns of table "ProductReviews"
+"""
+input ProductReviews_max_order_by {
+  created_at: order_by
+  id: order_by
+  productId: order_by
+  score: order_by
+  text: order_by
+  title: order_by
+  updated_at: order_by
+  userId: order_by
+}
+
+"""aggregate min on columns"""
+type ProductReviews_min_fields {
+  created_at: timestamptz
+  id: Int
+  productId: Int
+  score: Int
+  text: String
+  title: String
+  updated_at: timestamptz
+  userId: Int
+}
+
+"""
+order by min() on columns of table "ProductReviews"
+"""
+input ProductReviews_min_order_by {
+  created_at: order_by
+  id: order_by
+  productId: order_by
+  score: order_by
+  text: order_by
+  title: order_by
+  updated_at: order_by
+  userId: order_by
+}
+
+"""
+response of any mutation on the table "ProductReviews"
+"""
+type ProductReviews_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [ProductReviews!]!
+}
+
+"""
+input type for inserting object relation for remote table "ProductReviews"
+"""
+input ProductReviews_obj_rel_insert_input {
+  data: ProductReviews_insert_input!
+
+  """upsert condition"""
+  on_conflict: ProductReviews_on_conflict
+}
+
+"""
+on_conflict condition type for table "ProductReviews"
+"""
+input ProductReviews_on_conflict {
+  constraint: ProductReviews_constraint!
+  update_columns: [ProductReviews_update_column!]! = []
+  where: ProductReviews_bool_exp
+}
+
+"""Ordering options when selecting data from "ProductReviews"."""
+input ProductReviews_order_by {
+  Product: Products_order_by
+  ProductReviewComments_aggregate: ProductReviewComments_aggregate_order_by
+  User: Users_order_by
+  created_at: order_by
+  id: order_by
+  productId: order_by
+  score: order_by
+  text: order_by
+  title: order_by
+  updated_at: order_by
+  userId: order_by
+}
+
+"""primary key columns input for table: ProductReviews"""
+input ProductReviews_pk_columns_input {
+  id: Int!
+}
+
+"""
+select columns of table "ProductReviews"
+"""
+enum ProductReviews_select_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  productId
+
+  """column name"""
+  score
+
+  """column name"""
+  text
+
+  """column name"""
+  title
+
+  """column name"""
+  updated_at
+
+  """column name"""
+  userId
+}
+
+"""
+input type for updating data in table "ProductReviews"
+"""
+input ProductReviews_set_input {
+  created_at: timestamptz
+  id: Int
+  productId: Int
+  score: Int
+  text: String
+  title: String
+  updated_at: timestamptz
+  userId: Int
+}
+
+"""aggregate stddev on columns"""
+type ProductReviews_stddev_fields {
+  id: Float
+  productId: Float
+  score: Float
+  userId: Float
+}
+
+"""
+order by stddev() on columns of table "ProductReviews"
+"""
+input ProductReviews_stddev_order_by {
+  id: order_by
+  productId: order_by
+  score: order_by
+  userId: order_by
+}
+
+"""aggregate stddev_pop on columns"""
+type ProductReviews_stddev_pop_fields {
+  id: Float
+  productId: Float
+  score: Float
+  userId: Float
+}
+
+"""
+order by stddev_pop() on columns of table "ProductReviews"
+"""
+input ProductReviews_stddev_pop_order_by {
+  id: order_by
+  productId: order_by
+  score: order_by
+  userId: order_by
+}
+
+"""aggregate stddev_samp on columns"""
+type ProductReviews_stddev_samp_fields {
+  id: Float
+  productId: Float
+  score: Float
+  userId: Float
+}
+
+"""
+order by stddev_samp() on columns of table "ProductReviews"
+"""
+input ProductReviews_stddev_samp_order_by {
+  id: order_by
+  productId: order_by
+  score: order_by
+  userId: order_by
+}
+
+"""aggregate sum on columns"""
+type ProductReviews_sum_fields {
+  id: Int
+  productId: Int
+  score: Int
+  userId: Int
+}
+
+"""
+order by sum() on columns of table "ProductReviews"
+"""
+input ProductReviews_sum_order_by {
+  id: order_by
+  productId: order_by
+  score: order_by
+  userId: order_by
+}
+
+"""
+update columns of table "ProductReviews"
+"""
+enum ProductReviews_update_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  id
+
+  """column name"""
+  productId
+
+  """column name"""
+  score
+
+  """column name"""
+  text
+
+  """column name"""
+  title
+
+  """column name"""
+  updated_at
+
+  """column name"""
+  userId
+}
+
+"""aggregate var_pop on columns"""
+type ProductReviews_var_pop_fields {
+  id: Float
+  productId: Float
+  score: Float
+  userId: Float
+}
+
+"""
+order by var_pop() on columns of table "ProductReviews"
+"""
+input ProductReviews_var_pop_order_by {
+  id: order_by
+  productId: order_by
+  score: order_by
+  userId: order_by
+}
+
+"""aggregate var_samp on columns"""
+type ProductReviews_var_samp_fields {
+  id: Float
+  productId: Float
+  score: Float
+  userId: Float
+}
+
+"""
+order by var_samp() on columns of table "ProductReviews"
+"""
+input ProductReviews_var_samp_order_by {
+  id: order_by
+  productId: order_by
+  score: order_by
+  userId: order_by
+}
+
+"""aggregate variance on columns"""
+type ProductReviews_variance_fields {
+  id: Float
+  productId: Float
+  score: Float
+  userId: Float
+}
+
+"""
+order by variance() on columns of table "ProductReviews"
+"""
+input ProductReviews_variance_order_by {
+  id: order_by
+  productId: order_by
+  score: order_by
+  userId: order_by
+}
+
+"""
+A Relay connection object on "ProductReviews"
+"""
+type ProductReviewsConnection {
+  edges: [ProductReviewsEdge!]!
+  pageInfo: PageInfo!
+}
+
+type ProductReviewsEdge {
+  cursor: String!
+  node: ProductReviews!
+}
+
+"""
+columns and relationships of "Products"
+"""
+type Products implements Node {
+  """An array relationship"""
+  ProductReviews(
+    """distinct select on columns"""
+    distinct_on: [ProductReviews_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [ProductReviews_order_by!]
+
+    """filter the rows returned"""
+    where: ProductReviews_bool_exp
+  ): [ProductReviews!]!
+
+  """An aggregate relationship"""
+  ProductReviews_aggregate(
+    """distinct select on columns"""
+    distinct_on: [ProductReviews_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [ProductReviews_order_by!]
+
+    """filter the rows returned"""
+    where: ProductReviews_bool_exp
+  ): ProductReviews_aggregate!
+
+  """An array relationship connection"""
+  ProductReviews_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [ProductReviews_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [ProductReviews_order_by!]
+
+    """filter the rows returned"""
+    where: ProductReviews_bool_exp
+  ): ProductReviewsConnection!
+  created_at: timestamptz!
+  description: String
+  id: ID!
+  name: String!
+  price: numeric!
+  updated_at: timestamptz!
+}
+
+"""
+Boolean expression to filter rows from the table "Products". All fields are combined with a logical 'AND'.
+"""
+input Products_bool_exp {
+  ProductReviews: ProductReviews_bool_exp
+  _and: [Products_bool_exp!]
+  _not: Products_bool_exp
+  _or: [Products_bool_exp!]
+  created_at: timestamptz_comparison_exp
+  description: String_comparison_exp
+  id: Int_comparison_exp
+  name: String_comparison_exp
+  price: numeric_comparison_exp
+  updated_at: timestamptz_comparison_exp
+}
+
+"""
+unique or primary key constraints on table "Products"
+"""
+enum Products_constraint {
+  """unique or primary key constraint"""
+  Products_id_key
+
+  """unique or primary key constraint"""
+  Products_pkey
+}
+
+"""
+input type for incrementing numeric columns in table "Products"
+"""
+input Products_inc_input {
+  id: Int
+  price: numeric
+}
+
+"""
+input type for inserting data into table "Products"
+"""
+input Products_insert_input {
+  ProductReviews: ProductReviews_arr_rel_insert_input
+  created_at: timestamptz
+  description: String
+  id: Int
   name: String
-  native: String
-  rtl: Boolean!
+  price: numeric
+  updated_at: timestamptz
 }
 
-type State {
-  code: String
+"""
+response of any mutation on the table "Products"
+"""
+type Products_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [Products!]!
+}
+
+"""
+input type for inserting object relation for remote table "Products"
+"""
+input Products_obj_rel_insert_input {
+  data: Products_insert_input!
+
+  """upsert condition"""
+  on_conflict: Products_on_conflict
+}
+
+"""
+on_conflict condition type for table "Products"
+"""
+input Products_on_conflict {
+  constraint: Products_constraint!
+  update_columns: [Products_update_column!]! = []
+  where: Products_bool_exp
+}
+
+"""Ordering options when selecting data from "Products"."""
+input Products_order_by {
+  ProductReviews_aggregate: ProductReviews_aggregate_order_by
+  created_at: order_by
+  description: order_by
+  id: order_by
+  name: order_by
+  price: order_by
+  updated_at: order_by
+}
+
+"""primary key columns input for table: Products"""
+input Products_pk_columns_input {
+  id: Int!
+}
+
+"""
+select columns of table "Products"
+"""
+enum Products_select_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  description
+
+  """column name"""
+  id
+
+  """column name"""
+  name
+
+  """column name"""
+  price
+
+  """column name"""
+  updated_at
+}
+
+"""
+input type for updating data in table "Products"
+"""
+input Products_set_input {
+  created_at: timestamptz
+  description: String
+  id: Int
+  name: String
+  price: numeric
+  updated_at: timestamptz
+}
+
+"""
+update columns of table "Products"
+"""
+enum Products_update_column {
+  """column name"""
+  created_at
+
+  """column name"""
+  description
+
+  """column name"""
+  id
+
+  """column name"""
+  name
+
+  """column name"""
+  price
+
+  """column name"""
+  updated_at
+}
+
+"""
+A Relay connection object on "Products"
+"""
+type ProductsConnection {
+  edges: [ProductsEdge!]!
+  pageInfo: PageInfo!
+}
+
+type ProductsEdge {
+  cursor: String!
+  node: Products!
+}
+
+type query_root {
+  """An array relationship connection"""
+  ProductReviewComments_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [ProductReviewComments_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [ProductReviewComments_order_by!]
+
+    """filter the rows returned"""
+    where: ProductReviewComments_bool_exp
+  ): ProductReviewCommentsConnection!
+
+  """An array relationship connection"""
+  ProductReviews_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [ProductReviews_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [ProductReviews_order_by!]
+
+    """filter the rows returned"""
+    where: ProductReviews_bool_exp
+  ): ProductReviewsConnection!
+
+  """
+  fetch data from the table: "Products"
+  """
+  Products_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [Products_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [Products_order_by!]
+
+    """filter the rows returned"""
+    where: Products_bool_exp
+  ): ProductsConnection!
+
+  """
+  fetch data from the table: "Users"
+  """
+  Users_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [Users_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [Users_order_by!]
+
+    """filter the rows returned"""
+    where: Users_bool_exp
+  ): UsersConnection!
+  node(
+    """A globally unique id"""
+    id: ID!
+  ): Node
+}
+
+"""
+Boolean expression to compare columns of type "String". All fields are combined with logical 'AND'.
+"""
+input String_comparison_exp {
+  _eq: String
+  _gt: String
+  _gte: String
+
+  """does the column match the given case-insensitive pattern"""
+  _ilike: String
+  _in: [String!]
+
+  """
+  does the column match the given POSIX regular expression, case insensitive
+  """
+  _iregex: String
+  _is_null: Boolean
+
+  """does the column match the given pattern"""
+  _like: String
+  _lt: String
+  _lte: String
+  _neq: String
+
+  """does the column NOT match the given case-insensitive pattern"""
+  _nilike: String
+  _nin: [String!]
+
+  """
+  does the column NOT match the given POSIX regular expression, case insensitive
+  """
+  _niregex: String
+
+  """does the column NOT match the given pattern"""
+  _nlike: String
+
+  """
+  does the column NOT match the given POSIX regular expression, case sensitive
+  """
+  _nregex: String
+
+  """does the column NOT match the given SQL regular expression"""
+  _nsimilar: String
+
+  """
+  does the column match the given POSIX regular expression, case sensitive
+  """
+  _regex: String
+
+  """does the column match the given SQL regular expression"""
+  _similar: String
+}
+
+type subscription_root {
+  """An array relationship connection"""
+  ProductReviewComments_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [ProductReviewComments_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [ProductReviewComments_order_by!]
+
+    """filter the rows returned"""
+    where: ProductReviewComments_bool_exp
+  ): ProductReviewCommentsConnection!
+
+  """An array relationship connection"""
+  ProductReviews_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [ProductReviews_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [ProductReviews_order_by!]
+
+    """filter the rows returned"""
+    where: ProductReviews_bool_exp
+  ): ProductReviewsConnection!
+
+  """
+  fetch data from the table: "Products"
+  """
+  Products_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [Products_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [Products_order_by!]
+
+    """filter the rows returned"""
+    where: Products_bool_exp
+  ): ProductsConnection!
+
+  """
+  fetch data from the table: "Users"
+  """
+  Users_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [Users_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [Users_order_by!]
+
+    """filter the rows returned"""
+    where: Users_bool_exp
+  ): UsersConnection!
+  node(
+    """A globally unique id"""
+    id: ID!
+  ): Node
+}
+
+scalar timestamptz
+
+"""
+Boolean expression to compare columns of type "timestamptz". All fields are combined with logical 'AND'.
+"""
+input timestamptz_comparison_exp {
+  _eq: timestamptz
+  _gt: timestamptz
+  _gte: timestamptz
+  _in: [timestamptz!]
+  _is_null: Boolean
+  _lt: timestamptz
+  _lte: timestamptz
+  _neq: timestamptz
+  _nin: [timestamptz!]
+}
+
+"""
+columns and relationships of "Users"
+"""
+type Users implements Node {
+  """An array relationship"""
+  ProductReviewComments(
+    """distinct select on columns"""
+    distinct_on: [ProductReviewComments_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [ProductReviewComments_order_by!]
+
+    """filter the rows returned"""
+    where: ProductReviewComments_bool_exp
+  ): [ProductReviewComments!]!
+
+  """An aggregate relationship"""
+  ProductReviewComments_aggregate(
+    """distinct select on columns"""
+    distinct_on: [ProductReviewComments_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [ProductReviewComments_order_by!]
+
+    """filter the rows returned"""
+    where: ProductReviewComments_bool_exp
+  ): ProductReviewComments_aggregate!
+
+  """An array relationship connection"""
+  ProductReviewComments_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [ProductReviewComments_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [ProductReviewComments_order_by!]
+
+    """filter the rows returned"""
+    where: ProductReviewComments_bool_exp
+  ): ProductReviewCommentsConnection!
+
+  """An array relationship"""
+  ProductReviews(
+    """distinct select on columns"""
+    distinct_on: [ProductReviews_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [ProductReviews_order_by!]
+
+    """filter the rows returned"""
+    where: ProductReviews_bool_exp
+  ): [ProductReviews!]!
+
+  """An aggregate relationship"""
+  ProductReviews_aggregate(
+    """distinct select on columns"""
+    distinct_on: [ProductReviews_select_column!]
+
+    """limit the number of rows returned"""
+    limit: Int
+
+    """skip the first n rows. Use only with order_by"""
+    offset: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [ProductReviews_order_by!]
+
+    """filter the rows returned"""
+    where: ProductReviews_bool_exp
+  ): ProductReviews_aggregate!
+
+  """An array relationship connection"""
+  ProductReviews_connection(
+    after: String
+    before: String
+
+    """distinct select on columns"""
+    distinct_on: [ProductReviews_select_column!]
+    first: Int
+    last: Int
+
+    """sort the rows by one or more columns"""
+    order_by: [ProductReviews_order_by!]
+
+    """filter the rows returned"""
+    where: ProductReviews_bool_exp
+  ): ProductReviewsConnection!
+  email: String!
+  id: ID!
   name: String!
-  country: Country!
 }
 
-input StringQueryOperatorInput {
-  eq: String
-  ne: String
-  in: [String]
-  nin: [String]
-  regex: String
-  glob: String
+"""
+Boolean expression to filter rows from the table "Users". All fields are combined with a logical 'AND'.
+"""
+input Users_bool_exp {
+  ProductReviewComments: ProductReviewComments_bool_exp
+  ProductReviews: ProductReviews_bool_exp
+  _and: [Users_bool_exp!]
+  _not: Users_bool_exp
+  _or: [Users_bool_exp!]
+  email: String_comparison_exp
+  id: Int_comparison_exp
+  name: String_comparison_exp
 }
 
-input CountryFilterInput {
-  code: StringQueryOperatorInput
-  currency: StringQueryOperatorInput
-  continent: StringQueryOperatorInput
+"""
+unique or primary key constraints on table "Users"
+"""
+enum Users_constraint {
+  """unique or primary key constraint"""
+  Users_pkey
 }
 
-input ContinentFilterInput {
-  code: StringQueryOperatorInput
+"""
+input type for incrementing numeric columns in table "Users"
+"""
+input Users_inc_input {
+  id: Int
 }
 
-input LanguageFilterInput {
-  code: StringQueryOperatorInput
+"""
+input type for inserting data into table "Users"
+"""
+input Users_insert_input {
+  ProductReviewComments: ProductReviewComments_arr_rel_insert_input
+  ProductReviews: ProductReviews_arr_rel_insert_input
+  email: String
+  id: Int
+  name: String
 }
 
-type Query {
-  _entities(representations: [_Any!]!): [_Entity]!
-  _service: _Service!
-  countries(filter: CountryFilterInput): [Country!]!
-  country(code: ID!): Country
-  continents(filter: ContinentFilterInput): [Continent!]!
-  continent(code: ID!): Continent
-  languages(filter: LanguageFilterInput): [Language!]!
-  language(code: ID!): Language
+"""
+response of any mutation on the table "Users"
+"""
+type Users_mutation_response {
+  """number of rows affected by the mutation"""
+  affected_rows: Int!
+
+  """data from the rows affected by the mutation"""
+  returning: [Users!]!
 }
 
-union _Entity = Country | Continent | Language
+"""
+input type for inserting object relation for remote table "Users"
+"""
+input Users_obj_rel_insert_input {
+  data: Users_insert_input!
 
-scalar _Any
+  """upsert condition"""
+  on_conflict: Users_on_conflict
+}
 
-type _Service {
-  # The sdl representing the federated service capabilities. Includes federation directives, removes federation types, and includes rest of full schema after schema directives have been applied
-  sdl: String
+"""
+on_conflict condition type for table "Users"
+"""
+input Users_on_conflict {
+  constraint: Users_constraint!
+  update_columns: [Users_update_column!]! = []
+  where: Users_bool_exp
+}
+
+"""Ordering options when selecting data from "Users"."""
+input Users_order_by {
+  ProductReviewComments_aggregate: ProductReviewComments_aggregate_order_by
+  ProductReviews_aggregate: ProductReviews_aggregate_order_by
+  email: order_by
+  id: order_by
+  name: order_by
+}
+
+"""primary key columns input for table: Users"""
+input Users_pk_columns_input {
+  id: Int!
+}
+
+"""
+select columns of table "Users"
+"""
+enum Users_select_column {
+  """column name"""
+  email
+
+  """column name"""
+  id
+
+  """column name"""
+  name
+}
+
+"""
+input type for updating data in table "Users"
+"""
+input Users_set_input {
+  email: String
+  id: Int
+  name: String
+}
+
+"""
+update columns of table "Users"
+"""
+enum Users_update_column {
+  """column name"""
+  email
+
+  """column name"""
+  id
+
+  """column name"""
+  name
+}
+
+"""
+A Relay connection object on "Users"
+"""
+type UsersConnection {
+  edges: [UsersEdge!]!
+  pageInfo: PageInfo!
+}
+
+type UsersEdge {
+  cursor: String!
+  node: Users!
 }
 

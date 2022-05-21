@@ -30,6 +30,7 @@ export function createNetwork() {
   network.responseCache = responseCache;
   return network;
 }
+
 /**
  * Relay requires developers to configure a "fetch" function that tells Relay how to load
  * the results of GraphQL queries from your server (or other data source). See more at
@@ -39,11 +40,12 @@ async function networkFetch(
   params: RequestParameters,
   variables: Variables,
 ) {
-  // Fetch data from GitHub's GraphQL API:
-  const response = await fetch("https://countries.trevorblades.com/", {
+  // Fetch data from Hasura:
+  const response = await fetch("https://still-shad-75.hasura.app/v1beta1/relay", {
     method: "POST",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
+      "x-hasura-admin-secret": "SUPER-SECRET-KEY"
     },
     body: JSON.stringify({
       query: params.text,

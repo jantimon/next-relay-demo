@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<66c62ea4b12543e0230320fa34b7ae7c>>
+ * @generated SignedSource<<b7c56dbc0f19fa2740ebef2f776b95a8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,41 +10,41 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type Flag_icon$data = {
+export type ProductLink_product$data = {
+  readonly id: string;
   readonly name: string;
-  readonly code: string;
-  readonly " $fragmentType": "Flag_icon";
+  readonly " $fragmentType": "ProductLink_product";
 };
-export type Flag_icon$key = {
-  readonly " $data"?: Flag_icon$data;
-  readonly " $fragmentSpreads": FragmentRefs<"Flag_icon">;
+export type ProductLink_product$key = {
+  readonly " $data"?: ProductLink_product$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ProductLink_product">;
 };
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "Flag_icon",
+  "name": "ProductLink_product",
   "selections": [
     {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "name",
+      "name": "id",
       "storageKey": null
     },
     {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "code",
+      "name": "name",
       "storageKey": null
     }
   ],
-  "type": "Country",
+  "type": "Products",
   "abstractKey": null
 };
 
-(node as any).hash = "4d46dff1d972bae7db8195ef9b88426e";
+(node as any).hash = "120d34ad05f9afb898d61780e55d295f";
 
 export default node;
